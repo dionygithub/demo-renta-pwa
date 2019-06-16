@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="marketingspace">
+    <serverData>
+      <paths name="marketingspace">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="trabajo_diony/sitios_pwa/demo-renta-pwa" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>

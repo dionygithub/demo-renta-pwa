@@ -58,12 +58,26 @@ self.addEventListener('fetch', e => {
   e.respondWith(
     caches.match(e.request)
       .then(res => {
-        if (res) {
           //recuperar del cache
-          return res
-        }
-        //recuperar de la petición a la url
-        return fetch(e.request)
+          return res || fetch(e.request)
+
       })
   )
 })
+
+self.addEventListener('push', function(event) {
+    console.log('Received a push message', event);
+
+    var title = 'Yay a message.';
+    var body = 'We have received a push message.';
+    var icon = '/images/icon-192x192.png';
+    var tag = 'simple-push-demo-notification-tag';
+
+    event.waitUntil(
+        self.registration.showNotification(title, {
+            body: body,
+            icon: icon,
+            tag: tag
+        })
+    );
+});

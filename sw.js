@@ -83,7 +83,9 @@ self.addEventListener("push", function (event) {
     };
     event.waitUntil(
 
-        navigator.serviceWorker.getRegistration().then(function(reg){reg.showNotification(title, options);});
+        navigator.serviceWorker.getRegistration().then(function(reg){
+            reg.showNotification(title, options)
+        })
 
         //self.registration.showNotification(title, options)
     )

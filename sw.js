@@ -66,7 +66,26 @@ self.addEventListener('fetch', e => {
 })
 
 self.addEventListener("push", function (event) {
-    try {
+
+     const title = "Nuevo titulo";
+     const body = "Cuerpo de la notification";
+     const icon = "icon";
+     const tag = "tag";
+     const link = "http://www.google.com";
+
+    var options = {
+        body: body,
+        tag: tag,
+        icon: icon,
+        data: {
+            link: link
+        }
+    };
+    event.waitUntil(
+        self.registration.showNotification(title, options)
+    )
+
+    /*try {
         var payload = JSON.parse(event.data.text());
         var title = payload.title;
         var options = {
@@ -81,7 +100,7 @@ self.addEventListener("push", function (event) {
     } catch (error) {
         console.log(event.data.text());
         console.log(error.message);
-    }
+    }*/
 
 });
 

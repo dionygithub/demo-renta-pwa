@@ -65,19 +65,30 @@ self.addEventListener('fetch', e => {
   )
 })
 
-self.addEventListener('push', function(event) {
-    console.log('Received a push message', event);
+self.addEventListener("push", function (event) {
+    try {
+        var payload = JSON.parse(event.data.text());
+        var title = payload.title;
+        var options = {
+            body: payload.message,
+            data: {
+                link: payload.link
+            }
+        };
+        event.waitUntil(
+            self.registration.showNotification(title, options)
+        )
+    } catch (error) {
+        console.log(event.data.text());
+        console.log(error.message);
+    }
 
-    var title = 'Yay a message.';
-    var body = 'We have received a push message.';
-    var icon = '/images/icon-192x192.png';
-    var tag = 'simple-push-demo-notification-tag';
+});
 
-    event.waitUntil(
-        self.registration.showNotification(title, {
-            body: body,
-            icon: icon,
-            tag: tag
-        })
-    );
+self.addEventListener("notificationclick", function (event) {
+    var link = event.notification.data.link;
+    if (link) {
+        clients.openWindow(link);
+    }
+    event.notification.close();
 });

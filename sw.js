@@ -108,7 +108,7 @@ self.addEventListener('fetch', e => {
 self.addEventListener('push', handleNotificationPush);
 
 function handleNotificationPush(event) {
-    logger.log('Push notification received');
+    console.log('Push notification received');
 
     /* if ($Log.notificationReceived) {
         event.waitUntil(logNotificationReceived(event));
@@ -126,7 +126,20 @@ function handleNotificationPush(event) {
                 .catch(showNotification)
         );
     } else {
-        logger.warn('No notification.data and no fallbackURL.');
+        //logger.warn('No notification.data and no fallbackURL.');
         event.waitUntil(showNotification());
     }
+}
+
+
+function showNotification(data) {
+    if (!data || !data.tag) {
+        // eslint-disable-next-line no-param-reassign
+        data = $Notifications.default;
+    }
+    //logger.group(data.tag);
+    //console.log('Show notification.', data.tag);
+    return self.registration
+        .showNotification(data.title, data)
+        .then(delayDismissNotification);
 }

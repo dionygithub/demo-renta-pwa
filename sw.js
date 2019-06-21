@@ -64,7 +64,7 @@ self.addEventListener('fetch', e => {
   )
 })
 
-self.addEventListener("push", function (event) {
+/*self.addEventListener("push", function (event) {
 
      const title = "Nuevo titulo";
      const body = "Cuerpo de la notification";
@@ -82,9 +82,6 @@ self.addEventListener("push", function (event) {
     };
     event.waitUntil(
 
-        /*navigator.serviceWorker.getRegistration().then(function(reg){
-            reg.showNotification(title, options)
-        })*/
 
         self.registration.showNotification(title, options)
     )
@@ -104,14 +101,32 @@ self.addEventListener("push", function (event) {
     } catch (error) {
         console.log(event.data.text());
         console.log(error.message);
+    }
+
+});*/
+
+self.addEventListener('push', handleNotificationPush);
+
+function handleNotificationPush(event) {
+    logger.log('Push notification received');
+
+    /* if ($Log.notificationReceived) {
+        event.waitUntil(logNotificationReceived(event));
     }*/
 
-});
-
-self.addEventListener("notificationclick", function (event) {
-    var link = event.notification.data.link;
-    if (link) {
-        clients.openWindow(link);
+    // Show notification or fallback
+    if (event.data && event.data.title) {
+        event.waitUntil(showNotification(event.data));
+    } else if ($Notifications.fallbackURL) {
+        event.waitUntil(
+            self.registration.pushManager.getSubscription()
+                .then(fetchNotification)
+                .then(convertResponseToJson)
+                .then(showNotification)
+                .catch(showNotification)
+        );
+    } else {
+        logger.warn('No notification.data and no fallbackURL.');
+        event.waitUntil(showNotification());
     }
-    event.notification.close();
-});
+}

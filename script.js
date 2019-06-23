@@ -108,7 +108,7 @@ function subscribe() {
             // A problem occurred with the subscription; common reasons
             // include network errors, and lacking gcm_sender_id and/or
             // gcm_user_visible_only in the manifest.
-            console.error('Unable to subscribe to push.', e);
+            console.log('Unable to subscribe to push.', e);
             pushButton.disabled = false;
             pushButton.textContent = 'Enable Push Messages';
           }

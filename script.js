@@ -86,7 +86,9 @@ function subscribe() {
 
     console.log(serviceWorkerRegistration);
 
-    serviceWorkerRegistration.pushManager.subscribe()
+    serviceWorkerRegistration.pushManager.subscribe({
+          userVisibleOnly: true,
+        })
         .then(function(subscription) {
           // The subscription was successful
           isPushEnabled = true;

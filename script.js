@@ -52,7 +52,7 @@ if ('serviceWorker' in navigator) {
     // We need the service worker registration to check for a subscription
     navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
       // Do we already have a push message subscription?
-      serviceWorkerRegistration.pushManager.getSubscription()
+      serviceWorkerRegistration.pushManager.subscribe()
           .then(function(subscription) {
 
             console.log("subscription");

@@ -28,7 +28,7 @@ if ('serviceWorker' in navigator) {
 
     const title = "Nuevo titulo";
     const body = "Cuerpo de la notification";
-    const icon = "icon";
+    const icon = "img/favicon";
     const tag = "tag";
     const link = "http://www.google.com";
 

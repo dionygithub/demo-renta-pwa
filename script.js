@@ -102,6 +102,10 @@ function subscribe() {
           return true;
         })
         .catch(function(e) {
+
+          console.log(e);
+          console.log(Notification);
+
           if (Notification.permission === 'denied') {
             // The user denied the notification permission which
             // means we failed to subscribe and the user will need

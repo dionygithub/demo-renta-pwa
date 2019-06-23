@@ -31,6 +31,10 @@ if ('serviceWorker' in navigator) {
       return;
     }
 
+    Notification.requestPermission(status => {
+      console.log(status);
+    });
+
     // Check the current Notification permission.
     // If its denied, it's a permanent block until the
     // user changes the permission
@@ -74,9 +78,7 @@ if ('serviceWorker' in navigator) {
           });
     });
 
-    Notification.requestPermission(status => {
-      console.log(status);
-    });
+
 }
 
 function subscribe() {

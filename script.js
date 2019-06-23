@@ -48,10 +48,6 @@ if ('serviceWorker' in navigator) {
       return;
     }
 
-    Notification.requestPermission(status => {
-      console.log(status);
-    });
-
     // Check the current Notification permission.
     // If its denied, it's a permanent block until the
     // user changes the permission
@@ -66,45 +62,13 @@ if ('serviceWorker' in navigator) {
       return;
     }
 
+    Notification.requestPermission(status => {
+      console.log(status);
+    });
+
     navigator.serviceWorker.getRegistration().then(reg => {
       reg.showNotification(title, options)
     });
-
-    // We need the service worker registration to check for a subscription
-    navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
-      // Do we already have a push message subscription?
-
-
-      serviceWorkerRegistration.pushManager.subscribe()
-          .then(function(subscription) {
-
-            console.log("subscription");
-            console.log(subscription);
-
-            // Enable any UI which subscribes / unsubscribes from
-            // push messages.
-            var pushButton = document.querySelector('.js-push-button');
-            pushButton.disabled = false;
-
-            if (!subscription) {
-              // We aren't subscribed to push, so set UI
-              // to allow the user to enable push
-              //return;
-            }
-
-            // Keep your server in sync with the latest subscriptionId
-            //sendSubscriptionToServer(subscription);
-
-            // Set your UI to show they have subscribed for
-            // push messages
-            pushButton.textContent = 'Disable Push Messages';
-            isPushEnabled = true;
-          })
-          .catch(function(err) {
-            console.warn('Error during getSubscription()', err);
-          });
-    });
-
 
 }
 
@@ -114,11 +78,7 @@ function subscribe() {
   var pushButton = document.querySelector('.js-push-button');
   pushButton.disabled = true;
 
-  navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
-
-    console.log(serviceWorkerRegistration);
-
-    serviceWorkerRegistration.pushManager.subscribe({
+        navigator.serviceWorker.pushManager.subscribe({
           userVisibleOnly: true,
         }).then(function(subscription) {
           // The subscription was successful
@@ -153,7 +113,6 @@ function subscribe() {
             pushButton.textContent = 'Enable Push Messages';
           }
         });
-  });
 }
 
 

@@ -54,6 +54,10 @@ if ('serviceWorker' in navigator) {
       // Do we already have a push message subscription?
       serviceWorkerRegistration.pushManager.getSubscription()
           .then(function(subscription) {
+
+            console.log("subscription");
+            console.log(subscription);
+
             // Enable any UI which subscribes / unsubscribes from
             // push messages.
             var pushButton = document.querySelector('.js-push-button');

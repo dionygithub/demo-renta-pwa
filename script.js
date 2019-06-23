@@ -25,6 +25,23 @@ if ('serviceWorker' in navigator) {
 
     console.log("Entro en inicializar");
 
+
+    const title = "Nuevo titulo";
+    const body = "Cuerpo de la notification";
+    const icon = "icon";
+    const tag = "tag";
+    const link = "http://www.google.com";
+
+    var options = {
+      body: body,
+      tag: tag,
+      icon: icon,
+      data: {
+        link: link
+      }
+    };
+
+
     // Are Notifications supported in the service worker?
     if (!('showNotification' in ServiceWorkerRegistration.prototype)) {
       console.warn('Notifications aren\'t supported.');
@@ -49,9 +66,15 @@ if ('serviceWorker' in navigator) {
       return;
     }
 
+    navigator.serviceWorker.getRegistration().then(reg => {
+      reg.showNotification(title, options)
+    });
+
     // We need the service worker registration to check for a subscription
     navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
       // Do we already have a push message subscription?
+
+
       serviceWorkerRegistration.pushManager.subscribe()
           .then(function(subscription) {
 

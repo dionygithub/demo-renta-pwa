@@ -36,9 +36,8 @@ if ('serviceWorker' in navigator) {
       body: body,
       tag: tag,
       icon: icon,
-      data: {
-        link: link
-      }
+      link: link
+      
     };
 
 

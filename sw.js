@@ -64,27 +64,44 @@ self.addEventListener('fetch', e => {
   )
 })
 
-self.addEventListener("push", function (event) {
+self.addEventListener('push', function(event) {
+    console.log('Received a push message', event);
 
-     const title = "Nuevo titulo";
-     const body = "Cuerpo de la notification";
-     const icon = "icon";
-     const tag = "tag";
-     const link = "http://www.google.com";
+    var title = 'Yay a message.';
+    var body = 'We have received a push message.';
+    var icon = 'img/favicon/ms-icon-70x70.png';
+    var tag = 'simple-push-demo-notification-tag';
 
-    var options = {
-        body: body,
-        tag: tag,
-        icon: icon,
-        data: {
-            link: link
-        }
-    };
     event.waitUntil(
+        self.registration.showNotification(title, {
+            body: body,
+            icon: icon,
+            tag: tag,
+            url: "http://assdsd.com"
+        })
+    );
+});
 
+self.addEventListener('notificationclick', function(event) {
+    console.log('On notification click: ', event.notification.tag);
+    // Android doesnâ€™t close the notification when you click on it
+    // See: http://crbug.com/463146
+    event.notification.close();
 
-        self.registration.showNotification(title, options)
-    )
-
+    // This looks to see if the current is already open and
+    // focuses if it is
+    event.waitUntil(clients.matchAll({
+        type: 'window'
+    }).then(function(clientList) {
+        for (var i = 0; i < clientList.length; i++) {
+            var client = clientList[i];
+            if (client.url === '/' && 'focus' in client) {
+                return client.focus();
+            }
+        }
+        if (clients.openWindow) {
+            return clients.openWindow('/');
+        }
+    }));
 });
 

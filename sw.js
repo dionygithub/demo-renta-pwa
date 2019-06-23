@@ -86,22 +86,5 @@ self.addEventListener("push", function (event) {
         self.registration.showNotification(title, options)
     )
 
-    /*try {
-        var payload = JSON.parse(event.data.text());
-        var title = payload.title;
-        var options = {
-            body: payload.message,
-            data: {
-                link: payload.link
-            }
-        };
-        event.waitUntil(
-            self.registration.showNotification(title, options)
-        )
-    } catch (error) {
-        console.log(event.data.text());
-        console.log(error.message);
-    }*/
-
 });
 

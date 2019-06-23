@@ -8,7 +8,7 @@ window.addEventListener('load', function() {
     } else {
       subscribe();
     }
-  })
+  });
 
 });
 
@@ -74,48 +74,9 @@ if ('serviceWorker' in navigator) {
           });
     });
 
-
-    navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
-
-      console.log(serviceWorkerRegistration);
-
-      serviceWorkerRegistration.pushManager.subscribe({
-        userVisibleOnly: true,
-      }).then(function(subscription) {
-            // The subscription was successful
-            isPushEnabled = true;
-            pushButton.textContent = 'Disable Push Messages';
-            pushButton.disabled = false;
-
-            // TODO: Send the subscription.endpoint to your server
-            // and save it to send a push message at a later date
-            console.log("Enviar subscription");
-            console.log(subscription);
-            return true;
-          })
-          .catch(function(e) {
-
-            console.log(e);
-            console.log(Notification);
-
-            if (Notification.permission === 'denied') {
-              // The user denied the notification permission which
-              // means we failed to subscribe and the user will need
-              // to manually change the notification permission to
-              // subscribe to push messages
-              console.warn('Permission for Notifications was denied');
-              pushButton.disabled = true;
-            } else {
-              // A problem occurred with the subscription; common reasons
-              // include network errors, and lacking gcm_sender_id and/or
-              // gcm_user_visible_only in the manifest.
-              console.log('Unable to subscribe to push.', e);
-              pushButton.disabled = false;
-              pushButton.textContent = 'Enable Push Messages';
-            }
-          });
+    Notification.requestPermission(status => {
+      console.log(status);
     });
-
 }
 
 function subscribe() {

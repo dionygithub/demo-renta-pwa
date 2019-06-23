@@ -2,14 +2,15 @@ window.addEventListener('load', function() {
   var isPushEnabled = false;
 
   var pushButton = document.querySelector('.js-push-button');
-  pushButton.addEventListener('click', function() {
+  pushButton.addEventListener('click', function () {
     if (isPushEnabled) {
       unsubscribe();
     } else {
       subscribe();
     }
-  });
+  })
 
+)}
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js')
